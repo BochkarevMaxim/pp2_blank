@@ -2,24 +2,21 @@
 #include <iostream>
 #include <vector>
 #include "CBankClient.h"
+#include "SyncPrimitiveHandler.h"
 class CBankClient;
 
 const float TIMEOUT = 5.0f;
 
-enum executionCode
-{
-	SUCCESS,
-	ERR
-};
-
 class CBank
 {
 public:
-	CBank(int clientsCount);
+	CBank(int clientsCount, CSyncPrimitiveHandler & syncPrimitive);
 	CBankClient* CreateClient();
 	void UpdateClientBalance(CBankClient& client, int value);
 	DWORD WaitForThreadsComplited();
+
 private:
+	CSyncPrimitiveHandler m_syncPrimitive;
 	std::vector<CBankClient> m_clients;
 	std::vector<HANDLE>	m_threads;
 	int m_totalBalance;

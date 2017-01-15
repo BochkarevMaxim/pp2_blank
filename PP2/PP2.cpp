@@ -1,14 +1,20 @@
 #include "stdafx.h"
 #include <iostream>
 #include "CBank.h"
+#include "SyncPrimitiveHandler.h"
 #include "CBankClient.h"
-
-
 
 using namespace std;
 
+enum executionCode
+{
+	SUCCESS,
+	ERR
+};
+
 void PrintHelp();
 bool ReadCommandLineParams(int argc, char *argv[], int& clientsCount, string& primitiveType);
+bool isPrimitiveTypeCorrect(string primitiveType);
 
 int main(int argc, char *argv[])
 {
@@ -20,18 +26,43 @@ int main(int argc, char *argv[])
 		return ERR;
 	}
 
-	CBank* bank = new CBank(clientsCount);
+	if (!isPrimitiveTypeCorrect(primitiveType)) {
+		cout << "Incorrect synchronising primitive type. Use /? for help.\n";
+		return ERR;
+	}
+	else if (clientsCount < 1) {
+		cout << "Clients amount must be more or equal than 1!\n";
+		return ERR;
+	}
 
-	// TODO: WaitForMultipleObjects
-	bank->WaitForThreadsComplited();
+	if (clientsCount > 0)
+	{
+		CSyncPrimitiveHandler syncPrimitive("mutex");
+		CBank* bank = new CBank(clientsCount, syncPrimitive);
 
-    return 0;
+		// TODO: WaitForMultipleObjects
+		bank->WaitForThreadsComplited();
+	}
+
+	return SUCCESS;
 }
 
 void PrintHelp()
 {
 	cout << "Application takes 2 parametres: \n - clients amount \n - synchronization primitive (you can choose one):\n";
-	cout << "    cs (critical section)\n    mutex\n    semaphore\n    event\n    none(app will work without any synchronization primitive\n";
+	cout << "    critical_section\n    mutex\n    semaphore\n    event\n    none(app will work without any synchronization primitive\n";
+}
+
+bool isPrimitiveTypeCorrect(string primitiveType) {
+	if ((primitiveType == "semaphore") ||
+		(primitiveType == "critical_section") ||
+		(primitiveType == "mutex") ||
+		(primitiveType == "event") ||
+		(primitiveType == "none"))
+		return true;
+	else {
+		return false;
+	}
 }
 
 bool ReadCommandLineParams(int argc, char *argv[], int& clientsCount, string& primitiveType)
