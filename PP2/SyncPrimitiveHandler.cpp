@@ -1,10 +1,14 @@
 #include "SyncPrimitiveHandler.h"
 
 
+CSyncPrimitiveHandler::CSyncPrimitiveHandler()
+{
+	m_syncPrimitiveType = "none";
+}
 
 CSyncPrimitiveHandler::CSyncPrimitiveHandler(const std::string & syncPrimitiveType)
 {
-	m_syncPrimitiveType == syncPrimitiveType;
+	m_syncPrimitiveType = syncPrimitiveType;
 	if (syncPrimitiveType == "mutex")
 	{
 		m_syncPrimitive = CreateMutex(NULL, false, NULL);
@@ -20,6 +24,8 @@ CSyncPrimitiveHandler::CSyncPrimitiveHandler(const std::string & syncPrimitiveTy
 	else if (syncPrimitiveType == "critical_section")
 	{
 		InitializeCriticalSection(&m_criticalSection);
+	}
+	else if (syncPrimitiveType == "none") {
 	}
 }
 
@@ -38,9 +44,12 @@ void CSyncPrimitiveHandler::EnterSyncPrimitiveArea()
 	{
 		EnterCriticalSection(&m_criticalSection);
 	}
+	else if (m_syncPrimitiveType == "none") {
+	}
 	else {
 		WaitForSingleObject(m_syncPrimitive, INFINITE);
 	}
+
 }
 
 void CSyncPrimitiveHandler::LeaveSyncPrimitiveArea()
@@ -60,5 +69,7 @@ void CSyncPrimitiveHandler::LeaveSyncPrimitiveArea()
 	else if (m_syncPrimitiveType == "semaphore")
 	{
 		ReleaseSemaphore(m_syncPrimitive, 1, NULL);
+	}
+	else if (m_syncPrimitiveType == "none") {
 	}
 }

@@ -5,6 +5,7 @@
 class CSyncPrimitiveHandler
 {
 public:
+	CSyncPrimitiveHandler();
 	CSyncPrimitiveHandler(const std::string & syncPrimitiveType);
 	~CSyncPrimitiveHandler();
 
