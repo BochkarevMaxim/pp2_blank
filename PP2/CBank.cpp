@@ -1,7 +1,6 @@
 #include "CBank.h"
 #include "SyncPrimitiveHandler.h"
 
-
 CBank::CBank(int clientsCount, CSyncPrimitiveHandler & syncPrimitive)
 {
 	m_clients = std::vector<CBankClient>();
@@ -15,7 +14,6 @@ CBank::CBank(int clientsCount, CSyncPrimitiveHandler & syncPrimitive)
 	}
 }
 
-
 CBankClient* CBank::CreateClient()
 {
 	size_t clientId = m_clients.size();
@@ -25,12 +23,11 @@ CBankClient* CBank::CreateClient()
 	return client;
 }
 
-
 void CBank::UpdateClientBalance(CBankClient &client, int value)
 {	
 	m_syncPrimitive.EnterSyncPrimitiveArea();
 
-	std::cout << "Client " << client.GetId() << " initiates reading total balance. Current total balance = " << GetTotalBalance() << "." << std::endl;
+	std::cout << std::endl << "Client " << client.GetId() << " initiates reading total balance. Current total balance = " << GetTotalBalance() << ".";
 	
 	SomeLongOperations();
 	int totalBalance = GetTotalBalance() + value;
@@ -38,7 +35,7 @@ void CBank::UpdateClientBalance(CBankClient &client, int value)
 	std::cout
 		<< "Client " << client.GetId() << " updates his balance with " << value
 		<< " and initiates setting total balance to " << totalBalance
-		<< ". Must be: " << GetTotalBalance() + value << "." << std::endl << std::endl;
+		<< ". Must be: " << GetTotalBalance() + value << "." << std::endl;
 
 	if ((totalBalance < 0) || (totalBalance != GetTotalBalance() + value)) {
 		std::cout << "! ERROR ! Balance will not be changed!" << std::endl;
@@ -50,12 +47,10 @@ void CBank::UpdateClientBalance(CBankClient &client, int value)
 	m_syncPrimitive.LeaveSyncPrimitiveArea();
 }
 
-
 int CBank::GetTotalBalance()
 {
 	return m_totalBalance;
 }
-
 
 void CBank::SetTotalBalance(int value)
 {
@@ -64,7 +59,7 @@ void CBank::SetTotalBalance(int value)
 
 void CBank::SomeLongOperations()
 {
-	Sleep(TIMEOUT);
+	Sleep(LONG_OPERATIONS_TIMEOUT);
 }
 
 DWORD CBank::WaitForThreadsComplited()

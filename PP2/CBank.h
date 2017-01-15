@@ -1,11 +1,10 @@
 #pragma once
-#include <iostream>
-#include <vector>
+#include "stdafx.h"
 #include "CBankClient.h"
 #include "SyncPrimitiveHandler.h"
 class CBankClient;
 
-const float TIMEOUT = 5.0f;
+const float LONG_OPERATIONS_TIMEOUT = 5.0f;
 
 class CBank
 {

@@ -1,5 +1,5 @@
 #pragma once
-#include <Windows.h>
+#include "stdafx.h"
 #include "CBank.h"
 class CBank;
 
@@ -7,6 +7,7 @@ class CBankClient
 {
 public:
 	unsigned int GetId();
+
 private:
 	unsigned m_id;
 	CBank *m_bank;

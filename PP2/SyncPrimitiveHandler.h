@@ -1,7 +1,5 @@
 #pragma once
-#include <string>
-#include <Windows.h>
-
+#include "stdafx.h"
 class CSyncPrimitiveHandler
 {
 public:
@@ -16,6 +14,5 @@ private:
 	std::string m_syncPrimitiveType;
 	HANDLE m_syncPrimitive;
 	CRITICAL_SECTION m_criticalSection;
-
 };
 

@@ -49,7 +49,6 @@ void CSyncPrimitiveHandler::EnterSyncPrimitiveArea()
 	else {
 		WaitForSingleObject(m_syncPrimitive, INFINITE);
 	}
-
 }
 
 void CSyncPrimitiveHandler::LeaveSyncPrimitiveArea()

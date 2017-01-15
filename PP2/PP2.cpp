@@ -6,11 +6,7 @@
 
 using namespace std;
 
-enum executionCode
-{
-	SUCCESS,
-	ERR
-};
+
 
 void PrintHelp();
 bool ReadCommandLineParams(int argc, char *argv[], int& clientsCount, string& primitiveType);
