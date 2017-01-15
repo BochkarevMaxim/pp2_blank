@@ -6,6 +6,7 @@ CBank::CBank()
 {
 	m_clients = std::vector<CBankClient>();
 	m_totalBalance = 0;
+	m_threads = std::vector<HANDLE>();
 }
 
 
@@ -14,6 +15,7 @@ CBankClient* CBank::CreateClient()
 	unsigned int clientId = m_clients.size();
 	CBankClient* client = new CBankClient(this, clientId);
 	m_clients.push_back(*client);
+	m_threads.emplace_back(CreateThread(NULL, 0, &client->ThreadFunction, &*client, 0, NULL));
 	return client;
 }
 
@@ -53,6 +55,10 @@ void CBank::SetTotalBalance(int value)
 
 void CBank::SomeLongOperations()
 {
-	// TODO
 	Sleep(TIMEOUT);
+}
+
+DWORD CBank::WaitForThreadsComplited()
+{
+	return WaitForMultipleObjects(m_threads.size(), m_threads.data(), TRUE, INFINITE);
 }

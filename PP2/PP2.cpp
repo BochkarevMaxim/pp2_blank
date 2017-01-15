@@ -30,9 +30,7 @@ int main(int argc, char *argv[])
 	CBankClient* client2 = bank->CreateClient();
 
 	// TODO: WaitForMultipleObjects
-	while (true)
-	{
-	}
+	bank->WaitForThreadsComplited();
 
     return 0;
 }
