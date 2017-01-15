@@ -2,11 +2,16 @@
 
 
 
-CBank::CBank()
+CBank::CBank(int clientsCount)
 {
 	m_clients = std::vector<CBankClient>();
 	m_totalBalance = 0;
 	m_threads = std::vector<HANDLE>();
+
+	for (int i = 0; i < clientsCount; i++)
+	{
+		CreateClient();
+	}
 }
 
 

@@ -3,13 +3,10 @@
 #include "CBank.h"
 #include "CBankClient.h"
 
-enum executionCode
-{
-	SUCCESS,
-	ERR
-};
+
 
 using namespace std;
+
 void PrintHelp();
 bool ReadCommandLineParams(int argc, char *argv[], int& clientsCount, string& primitiveType);
 
@@ -19,15 +16,11 @@ int main(int argc, char *argv[])
 	string primitiveType = "";
 
 	if(!ReadCommandLineParams(argc, argv, clientsCount, primitiveType)){ 
+		cout << "Command line parametres read error. Run app with /? to help.\n";
 		return ERR;
 	}
 
-	cout << clientsCount << endl;
-	cout << primitiveType.c_str();
-
-	CBank* bank = new CBank();
-	CBankClient* client1 = bank->CreateClient();
-	CBankClient* client2 = bank->CreateClient();
+	CBank* bank = new CBank(clientsCount);
 
 	// TODO: WaitForMultipleObjects
 	bank->WaitForThreadsComplited();
@@ -37,10 +30,8 @@ int main(int argc, char *argv[])
 
 void PrintHelp()
 {
-	//cout << "pp2.exe <bankClientsNumber> <syncPrimitive>\n\tmutex\n\tsemaphore\n\tevent\n\tcritical_section\nif syncPrimitive don`t specified or incorrect, primitive won`t use";
 	cout << "Application takes 2 parametres: \n - clients amount \n - synchronization primitive (you can choose one):\n";
 	cout << "    cs (critical section)\n    mutex\n    semaphore\n    event\n    none(app will work without any synchronization primitive\n";
-
 }
 
 bool ReadCommandLineParams(int argc, char *argv[], int& clientsCount, string& primitiveType)

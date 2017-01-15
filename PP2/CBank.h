@@ -15,7 +15,7 @@ enum executionCode
 class CBank
 {
 public:
-	CBank();
+	CBank(int clientsCount);
 	CBankClient* CreateClient();
 	void UpdateClientBalance(CBankClient& client, int value);
 	DWORD WaitForThreadsComplited();
