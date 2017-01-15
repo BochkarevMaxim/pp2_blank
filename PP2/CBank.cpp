@@ -21,12 +21,11 @@ CBankClient* CBank::CreateClient()
 
 
 void CBank::UpdateClientBalance(CBankClient &client, int value)
-{
-	int totalBalance = GetTotalBalance();
-	std::cout << "Client " << client.GetId() << " initiates reading total balance. Total = " << totalBalance << "." << std::endl;
+{	
+	std::cout << "Client " << client.GetId() << " initiates reading total balance. Total = " << GetTotalBalance() << "." << std::endl;
 	
 	SomeLongOperations();
-	totalBalance += value;
+	int totalBalance = GetTotalBalance() + value;
 
 	std::cout
 		<< "Client " << client.GetId() << " updates his balance with " << value
@@ -34,7 +33,7 @@ void CBank::UpdateClientBalance(CBankClient &client, int value)
 		<< ". Must be: " << GetTotalBalance() + value << "." << std::endl;
 
 	if ((totalBalance < 0) || (totalBalance != GetTotalBalance() + value)) {
-		std::cout << "! ERROR !" << std::endl;
+		std::cout << "! ERROR ! Balance will not be changed!" << std::endl;
 	}
 	else {
 		SetTotalBalance(totalBalance);

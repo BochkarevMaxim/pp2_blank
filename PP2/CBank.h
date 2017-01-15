@@ -6,6 +6,12 @@ class CBankClient;
 
 const float TIMEOUT = 5.0f;
 
+enum executionCode
+{
+	SUCCESS,
+	ERR
+};
+
 class CBank
 {
 public:
