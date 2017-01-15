@@ -4,6 +4,8 @@
 #include "CBankClient.h"
 class CBankClient;
 
+const float TIMEOUT = 5.0f;
+
 class CBank
 {
 public:

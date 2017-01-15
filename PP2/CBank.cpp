@@ -1,5 +1,7 @@
 #include "CBank.h"
 
+
+
 CBank::CBank()
 {
 	m_clients = std::vector<CBankClient>();
@@ -29,9 +31,7 @@ void CBank::UpdateClientBalance(CBankClient &client, int value)
 		<< " and initiates setting total balance to " << totalBalance
 		<< ". Must be: " << GetTotalBalance() + value << "." << std::endl;
 
-	// Check correctness of transaction through actual total balance
-	if ((totalBalance < 0) 
-		|| (totalBalance != GetTotalBalance() + value)) {
+	if ((totalBalance < 0) || (totalBalance != GetTotalBalance() + value)) {
 		std::cout << "! ERROR !" << std::endl;
 	}
 	else {
@@ -54,4 +54,5 @@ void CBank::SetTotalBalance(int value)
 void CBank::SomeLongOperations()
 {
 	// TODO
+	Sleep(TIMEOUT);
 }
